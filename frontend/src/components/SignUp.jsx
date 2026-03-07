@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import bg from "../assets/authBg.png";
 import { useNavigate } from 'react-router-dom';
 import { IoEyeSharp } from "react-icons/io5";
 import { FaEyeSlash } from "react-icons/fa";
+import { userDataContext } from "../context/UserContext";
 
 function SignUp() {
   const [visiblePassword, setVisiblePassword] = useState(false);
+  const serverUrl = useContext(userDataContext)
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleSignup = async()=>{
+
+  }
 
   const navigate = useNavigate();
   return (
