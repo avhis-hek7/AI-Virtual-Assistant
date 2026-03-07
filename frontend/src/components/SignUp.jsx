@@ -1,18 +1,32 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import bg from "../assets/authBg.png";
 import { useNavigate } from 'react-router-dom';
 import { IoEyeSharp } from "react-icons/io5";
 import { FaEyeSlash } from "react-icons/fa";
-import { userDataContext } from "../context/UserContext";
+
+import axios from "axios";
 
 function SignUp() {
   const [visiblePassword, setVisiblePassword] = useState(false);
-  const serverUrl = useContext(userDataContext)
+  const [err, setErr] = useState("");
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSignup = async()=>{
+  const handleSignup = async(e)=>{
+    e.preventDefault();
+    setErr("");
+    try {
+        let result = await axios.post('http://localhost:8000/api/auth/register',{
+            name,email,password
+        },{withCredentials:true})
+        console.log(result.data)
+    } catch (error) {
+        console.log(error)
+        setErr(error.response.data.message)
+        
+    }
 
   }
 
@@ -22,7 +36,7 @@ function SignUp() {
       className="w-full h-screen bg-cover flex justify-center items-center"
       style={{ backgroundImage: `url(${bg})` }}
     >
-      <form className="w-[90%] h-150 max-w-125 bg-[#0000007c] backdrop-blur shadow-lg shadow-black flex flex-col items-center justify-center gap-5 px-5">
+      <form className="w-[90%] h-150 max-w-125 bg-[#0000007c] backdrop-blur shadow-lg shadow-black flex flex-col items-center justify-center gap-5 px-5" onSubmit={handleSignup}>
         <h1 className="text-white text-[30px] font-semibold mb-7.5">
           Register to <span className="text-blue-400">Virtual Assistant</span>
         </h1>
@@ -68,6 +82,7 @@ function SignUp() {
             />
           )}
         </div>
+        {err.length>0 && <p className="text-red-700 text-[17px]">*{err}</p> }
         <button className="min-w-37.5 h-15 bg-white rounded-full text-black font-semibold text-4 mt-6">Sign Up</button>
         <p className="text-white text-[18px] cursor-pointer" onClick={()=>navigate('/login')}>Alredy have an account? <span className="text-blue-400">Log In</span></p>
       </form>

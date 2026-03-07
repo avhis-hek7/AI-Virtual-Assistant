@@ -35,6 +35,7 @@ async function userRegisterController(req,res){
                 _id:user._id,
                 email:user.email,
                 name:user.name
+               
             }
         })
         
