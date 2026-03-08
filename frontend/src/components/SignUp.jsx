@@ -9,6 +9,7 @@ import axios from "axios";
 function SignUp() {
   const [visiblePassword, setVisiblePassword] = useState(false);
   const [err, setErr] = useState("");
+    const [loading, setLoading] = useState(false);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -17,12 +18,15 @@ function SignUp() {
   const handleSignup = async(e)=>{
     e.preventDefault();
     setErr("");
+    setLoading(true)
     try {
         let result = await axios.post('http://localhost:8000/api/auth/register',{
             name,email,password
         },{withCredentials:true})
         console.log(result.data)
+        setLoading(false)
     } catch (error) {
+        setLoading(false)
         console.log(error)
         setErr(error.response.data.message)
         
@@ -83,7 +87,7 @@ function SignUp() {
           )}
         </div>
         {err.length>0 && <p className="text-red-700 text-[17px]">*{err}</p> }
-        <button className="min-w-37.5 h-15 bg-white rounded-full text-black font-semibold text-4 mt-6">Sign Up</button>
+        <button className="min-w-37.5 h-15 bg-white rounded-full text-black font-semibold text-4 mt-6" disabled={loading}>{loading?"Loading...":"Sign Up"}</button>
         <p className="text-white text-[18px] cursor-pointer" onClick={()=>navigate('/login')}>Alredy have an account? <span className="text-blue-400">Log In</span></p>
       </form>
     </div>
