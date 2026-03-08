@@ -34,7 +34,8 @@ async function userRegisterController(req,res){
             user:{
                 _id:user._id,
                 email:user.email,
-                name:user.name
+                name:user.name,
+                password:user.password
                
             }
         })
@@ -79,7 +80,8 @@ async function userLoginController(req,res){
         isUserExists:{
             _id:isUserExists._id,
             name:isUserExists.name,
-            email:isUserExists.email
+            email:isUserExists.email,
+            password:user.password
 
 
         }
