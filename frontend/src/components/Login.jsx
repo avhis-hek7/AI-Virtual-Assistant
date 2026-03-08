@@ -3,7 +3,6 @@ import bg from "../assets/authBg.png";
 import { useNavigate } from 'react-router-dom';
 import { IoEyeSharp } from "react-icons/io5";
 import { FaEyeSlash } from "react-icons/fa";
-
 import axios from "axios";
 
 function Login() {

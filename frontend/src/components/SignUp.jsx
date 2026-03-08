@@ -3,11 +3,14 @@ import bg from "../assets/authBg.png";
 import { useNavigate } from 'react-router-dom';
 import { IoEyeSharp } from "react-icons/io5";
 import { FaEyeSlash } from "react-icons/fa";
-
 import axios from "axios";
+import { useContext } from "react";
+
+import UserDataContext from "../context/UserDataContext";
 
 function SignUp() {
   const [visiblePassword, setVisiblePassword] = useState(false);
+  const { serverUrl } = useContext(UserDataContext);
   const [err, setErr] = useState("");
     const [loading, setLoading] = useState(false);
 
@@ -20,7 +23,8 @@ function SignUp() {
     setErr("");
     setLoading(true)
     try {
-        let result = await axios.post('http://localhost:8000/api/auth/register',{
+       let result = await axios.post(`${serverUrl}/api/auth/register`,{
+      //  let result = await axios.post(`http://localhost:8000/api/auth/register`,{
             name,email,password
         },{withCredentials:true})
         console.log(result.data)
@@ -86,7 +90,7 @@ function SignUp() {
             />
           )}
         </div>
-        {err.length>0 && <p className="text-red-700 text-[17px]">*{err}</p> }
+        {err.length > 0 && <p className="text-red-700 text-[17px]">*{err}</p> }
         <button className="min-w-37.5 h-15 bg-white rounded-full text-black font-semibold text-4 mt-6" disabled={loading}>{loading?"Loading...":"Sign Up"}</button>
         <p className="text-white text-[18px] cursor-pointer" onClick={()=>navigate('/login')}>Alredy have an account? <span className="text-blue-400">Log In</span></p>
       </form>
