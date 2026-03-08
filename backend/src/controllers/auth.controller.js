@@ -81,13 +81,13 @@ async function userLoginController(req,res){
             _id:isUserExists._id,
             name:isUserExists.name,
             email:isUserExists.email,
-            password:user.password
+            password:isUserExists.password
 
 
         }
     })}
     catch(error){
-        return res.status(500).return({
+        return res.status(500).json({
             message:`Login error ${error}`
         })
 
