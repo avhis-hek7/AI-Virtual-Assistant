@@ -5,6 +5,7 @@ import Login from './components/Login'
 import Customize from './components/Customize'
 import UserDataContext from './context/UserDataContext'
 import Home from './components/Home'
+import Customize2 from './components/Customize2'
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
       <Route path='/signup' element={!userData?<SignUp/>:<Navigate to={"/"} />}  />
       <Route path='/login' element={!userData?<Login/>:<Navigate to={"/"} />} />
       <Route path='/customize' element={userData?<Customize/>:<Navigate to={"/login"} />} />
+      <Route path='/customize2' element={userData?<Customize2/>:<Navigate to={"/login"} />} />
     </Routes>
   )
 }

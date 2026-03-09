@@ -1,0 +1,31 @@
+import React, { useContext, useState } from 'react'
+import UserDataContext from '../context/UserDataContext'
+
+function Customize2() {
+    const{userData} = useContext(UserDataContext);
+    const [assistantName, setAssistanceImage] = useState(userData?.assistantName || "");
+  return (
+    <div className="w-full h-screen bg-linear-to-t from-[black] to-[#030353] flex justify-center items-center flex-col p-5 ">
+        <h1  className="text-white text-3xl text-center mb-6">Enter Your <span className="text-blue-200">Assistant Name</span> </h1>
+         <input
+          type="text"
+          placeholder="eg.shifra"
+          className="w-full max-w-150 h-15 outline-none border-2 border-white bg-transparent text-white placeholder-gray-300 px-5 py-2.5 rounded-full text-[18px]"
+          required
+          onChange={(e)=>{setAssistanceImage(e.target.value)}}
+          value={assistantName}
+        />
+
+       {assistantName &&  <button
+        className="min-w-60 h-15 bg-white rounded-full text-xl text-black font-semibold text-4 mt-6 
+        transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95 cursor-pointer" 
+      >
+        Create Your Assistant.
+      </button>}
+
+
+    </div>
+  )
+}
+
+export default Customize2

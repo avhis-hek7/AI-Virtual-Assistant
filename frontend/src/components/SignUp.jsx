@@ -93,7 +93,8 @@ function SignUp() {
           )}
         </div>
         {err.length > 0 && <p className="text-red-700 text-[17px]">*{err}</p> }
-        <button className="min-w-37.5 h-15 bg-white rounded-full text-black font-semibold text-4 mt-6" disabled={loading}>{loading?"Loading...":"Sign Up"}</button>
+        <button className="min-w-37.5 h-15 bg-white rounded-full text-black font-semibold text-4 mt-6 
+  transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95" disabled={loading}>{loading?"Loading...":"Sign Up"}</button>
         <p className="text-white text-[18px] cursor-pointer" onClick={()=>navigate('/login')}>Alredy have an account? <span className="text-blue-400">Log In</span></p>
       </form>
     </div>
