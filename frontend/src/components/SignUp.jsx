@@ -29,6 +29,7 @@ function SignUp() {
         },{withCredentials:true})
         setUserData(result.data)
         setLoading(false)
+        navigate("/customize")
     } catch (error) {
         setUserData(null)  
         setLoading(false)
