@@ -5,6 +5,8 @@ import axios from "axios";
 function UserContext({ children }) {
   const serverUrl = "http://localhost:8000";
 
+ 
+
   const [userData, setUserData] = useState(null);
 
   const handleCurrentUser = async() => {
@@ -24,8 +26,12 @@ function UserContext({ children }) {
     handleCurrentUser();
   },[])
 
+   const value ={
+    serverUrl, userData, setUserData
+  }
+
   return (
-    <UserDataContext.Provider value={{ serverUrl }}>
+    <UserDataContext.Provider value={value}>
       {children}
     </UserDataContext.Provider>
   );

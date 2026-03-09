@@ -10,7 +10,7 @@ import UserDataContext from "../context/UserDataContext";
 
 function Login() {
   const [visiblePassword, setVisiblePassword] = useState(false);
-  const { serverUrl } = useContext(UserDataContext);
+  const { serverUrl, userData, setUserData } = useContext(UserDataContext);
   const [err, setErr] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -26,9 +26,10 @@ function Login() {
         // let result = await axios.post("http://localhost:8000/api/auth/login",{
             email,password
         },{withCredentials:true})
-        console.log(result.data)
+        setUserData(result.data)
         setLoading(false)
     } catch (error) {
+        setUserData(null)     
         console.log(error)
         setLoading(false)
         setErr(error.response.data.message)

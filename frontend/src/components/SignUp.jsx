@@ -10,7 +10,7 @@ import UserDataContext from "../context/UserDataContext";
 
 function SignUp() {
   const [visiblePassword, setVisiblePassword] = useState(false);
-  const { serverUrl } = useContext(UserDataContext);
+  const { serverUrl,userData, setUserData } = useContext(UserDataContext);
   const [err, setErr] = useState("");
     const [loading, setLoading] = useState(false);
 
@@ -27,9 +27,10 @@ function SignUp() {
       //  let result = await axios.post(`http://localhost:8000/api/auth/register`,{
             name,email,password
         },{withCredentials:true})
-        console.log(result.data)
+        setUserData(result.data)
         setLoading(false)
     } catch (error) {
+        setUserData(null)  
         setLoading(false)
         console.log(error)
         setErr(error.response.data.message)
