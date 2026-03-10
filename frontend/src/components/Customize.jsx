@@ -10,10 +10,11 @@ import image7 from "../assets/authBg.png";
 import { FaImages } from "react-icons/fa6";
 import UserDataContext from "../context/UserDataContext";
 import { useNavigate } from "react-router-dom";
+import { MdKeyboardBackspace } from "react-icons/md";
 
 function Customize() {
 
-    const {serverUrl, userData, setUserData,frontendImage , setFrontendImage, backendImage , setBackendImage,selectedImage, setSelectedImage} = useContext(UserDataContext);
+    const {frontendImage , setFrontendImage,setBackendImage,selectedImage, setSelectedImage} = useContext(UserDataContext);
     const navigate = useNavigate();
  
     const inputImage = useRef()
@@ -25,6 +26,7 @@ function Customize() {
     }
   return (
     <div className="w-full h-screen bg-linear-to-t from-[black] to-[#030353] flex justify-center items-center flex-col p-5 ">
+      <MdKeyboardBackspace className='absolute top-10 left-20 text-white w-20 h-10 cursor-pointer' onClick={()=>navigate('/')}/>
       <h1 className="text-white text-3xl text-center mb-6">
         Select Your <span className="text-blue-200">Assistant Image</span>{" "}
       </h1>

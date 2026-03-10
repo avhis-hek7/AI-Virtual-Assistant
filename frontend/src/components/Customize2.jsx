@@ -1,27 +1,35 @@
 import React, { useContext, useState } from 'react'
 import UserDataContext from '../context/UserDataContext'
 import axios from 'axios';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { MdKeyboardBackspace } from "react-icons/md";
 
 function Customize2() {
     const{userData, backendImage, selectedImage, serverUrl, setUserData} = useContext(UserDataContext);
     const [assistantName, setAssistanceImage] = useState(userData?.assistantName || "");
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const handleUpdateAssistant = async() =>{
+      setLoading(true)
 
       try {
         let formData = new FormData();
         formData.append('assistantName',assistantName);
         if(backendImage){
-          formData.append('assisatntImage',backendImage);
+          formData.append('assistantImage', backendImage);
         }else{
           formData.append("imageUrl",selectedImage);
         }
         const result = await axios.post(`${serverUrl}/api/user/update`,formData,{withCredentials:true})
+        setLoading(false)
         console.log(result.data);
-        setUserData(result.data)
+        setUserData(result.data.user);
+        navigate('/');
       } catch (error) {
+        setLoading(false);
         console.log(error);
+        
         
       }
 
@@ -30,8 +38,9 @@ function Customize2() {
 
 
   return (
-    <div className="w-full h-screen bg-linear-to-t from-[black] to-[#030353] flex justify-center items-center flex-col p-5 ">
-        <h1  className="text-white text-3xl text-center mb-6">Enter Your <span className="text-blue-200">Assistant Name</span> </h1>
+    <div className="w-full h-screen bg-linear-to-t from-[black] to-[#030353] flex justify-center items-center flex-col p-5 relative ">
+        <MdKeyboardBackspace className='absolute top-10 left-20 text-white w-20 h-10 cursor-pointer' onClick={()=>navigate('/customize')}/>
+        <h1  className="text-white text-3xl text-center mb-6">Enter Your <span className="text-blue-200" >Assistant Name</span> </h1>
          <input
           type="text"
           placeholder="eg.shifra"
@@ -46,8 +55,11 @@ function Customize2() {
         transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95 cursor-pointer" 
 
         onClick={()=>handleUpdateAssistant()}
+        disabled={loading}
+
+
       >
-        Create Your Assistant.
+        { !loading?"Create Your Assistant.":"Loading..."}
       </button>}
 
 

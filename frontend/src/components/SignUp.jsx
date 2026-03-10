@@ -10,7 +10,7 @@ import UserDataContext from "../context/UserDataContext";
 
 function SignUp() {
   const [visiblePassword, setVisiblePassword] = useState(false);
-  const { serverUrl,userData, setUserData } = useContext(UserDataContext);
+  const { serverUrl, setUserData } = useContext(UserDataContext);
   const [err, setErr] = useState("");
     const [loading, setLoading] = useState(false);
 

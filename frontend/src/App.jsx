@@ -9,14 +9,15 @@ import Customize2 from './components/Customize2'
 
 function App() {
 
-  const {userData, setUserData} = useContext(UserDataContext)
+  const {userData} = useContext(UserDataContext)
   return (
     <Routes>
-      <Route path='/' element={(userData?.assistantImage && userData.assistantName)?<Home/>:<Navigate to={'/customize'}/>}  />
-      <Route path='/signup' element={!userData?<SignUp/>:<Navigate to={"/"} />}  />
+      
+      <Route path='/' element={(userData?.assistantImage && userData?.assistantName)? <Home/>:<Navigate to={'/customize'}/>}  />
+      <Route path='/signup' element={!userData?<SignUp/>:<Navigate to={"/customize"} />}  />
       <Route path='/login' element={!userData?<Login/>:<Navigate to={"/"} />} />
-      <Route path='/customize' element={userData?<Customize/>:<Navigate to={"/login"} />} />
-      <Route path='/customize2' element={userData?<Customize2/>:<Navigate to={"/login"} />} />
+      <Route path='/customize' element={userData?<Customize/>:<Navigate to={"/signup"} />} />
+      <Route path='/customize2' element={userData?<Customize2/>:<Navigate to={"/signup"} />} />
     </Routes>
   )
 }
