@@ -7,7 +7,7 @@ async function geminiResponse(prompt) {
         "parts": [{"text": prompt}]
       }]
       })
-      return result.data
+      return result.data.candidates[0].content.parts[0].text;
     } catch (error) {
         console.log(error)
     }
