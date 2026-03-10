@@ -1,9 +1,34 @@
 import React, { useContext, useState } from 'react'
 import UserDataContext from '../context/UserDataContext'
+import axios from 'axios';
+import { Navigate } from 'react-router-dom';
 
 function Customize2() {
-    const{userData} = useContext(UserDataContext);
+    const{userData, backendImage, selectedImage, serverUrl, setUserData} = useContext(UserDataContext);
     const [assistantName, setAssistanceImage] = useState(userData?.assistantName || "");
+
+    const handleUpdateAssistant = async() =>{
+
+      try {
+        let formData = new FormData();
+        formData.append('assistantName',assistantName);
+        if(backendImage){
+          formData.append('assisatntImage',backendImage);
+        }else{
+          formData.append("imageUrl",selectedImage);
+        }
+        const result = await axios.post(`${serverUrl}/api/user/update`,formData,{withCredentials:true})
+        console.log(result.data);
+        setUserData(result.data)
+      } catch (error) {
+        console.log(error);
+        
+      }
+
+    }
+
+
+
   return (
     <div className="w-full h-screen bg-linear-to-t from-[black] to-[#030353] flex justify-center items-center flex-col p-5 ">
         <h1  className="text-white text-3xl text-center mb-6">Enter Your <span className="text-blue-200">Assistant Name</span> </h1>
@@ -19,6 +44,8 @@ function Customize2() {
        {assistantName &&  <button
         className="min-w-60 h-15 bg-white rounded-full text-xl text-black font-semibold text-4 mt-6 
         transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95 cursor-pointer" 
+
+        onClick={()=>handleUpdateAssistant()}
       >
         Create Your Assistant.
       </button>}
