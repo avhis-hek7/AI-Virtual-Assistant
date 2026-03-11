@@ -164,17 +164,20 @@ function Home() {
         setUserText(transcript);
         recognition.stop();
 
+      // setUserText(transcript); name doesnot to provide
+      // recognition.stop();
+
         const data = await getGeminiResponse(transcript);
         handleCommand(data);
         setAiText(data.response);
         setUserText("");
-      }
+       // }
     };
 
     // Initial greeting
     const greeting = new SpeechSynthesisUtterance(
-      `Hello ${userData.name}, what can I help you with?`
-    );
+  `Hello ${userData.name}, welcome to my world. I am an AI virtual assistant developed by Mr. Abhishek Sharma. What can I help you with today?`
+);
     greeting.onend = () => startRecognitionSafe();
     synth.speak(greeting);
 
