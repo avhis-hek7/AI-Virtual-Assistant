@@ -29,6 +29,84 @@ function Home() {
      window.speechSynthesis.speak(utterance);
   }
 
+// const handleCommand = (data) => {
+//   const { type, userInput, response } = data;
+
+//   speak(response);
+//   console.log("Command:", type, userInput);
+
+//   if (type === "google_search") {
+//     const query = encodeURIComponent(userInput);
+//     window.open(`https://www.google.com/search?q=${query}`, "_blank");
+//   }
+
+//   if (type === "calculator_open") {
+//     window.open("https://www.calculator.net/", "_blank");
+//   }
+
+//   if (type === "instagram_open") {
+//     window.open("https://www.instagram.com/", "_blank");
+//   }
+
+//   if (type === "facebook_open") {
+//     window.open("https://www.facebook.com/", "_blank");
+//   }
+
+//   if (type === "weather_show") {
+//     window.open("https://www.weather.com/weather", "_blank");
+//   }
+
+//   if (type === "youtube_search" || type === 'youtube_play') {
+//     const query = encodeURIComponent(userInput);
+//     window.open(
+//       `https://www.youtube.com/results?search_query=${query}`,
+//       "_blank"
+//     );
+//   }
+// };
+
+const handleCommand = (data) => {
+  const { type, userInput, response } = data;
+
+  speak(response);
+  console.log("Command:", type, userInput);
+
+  const openURL = (url) => {
+    const a = document.createElement("a");
+    a.href = url;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+
+  if (type === "google_search") {
+    const query = encodeURIComponent(userInput);
+    openURL(`https://www.google.com/search?q=${query}`);
+  }
+
+  if (type === "calculator_open") {
+    openURL("https://www.calculator.net/");
+  }
+
+  if (type === "instagram_open") {
+    openURL("https://www.instagram.com/");
+  }
+
+  if (type === "facebook_open") {
+    openURL("https://www.facebook.com/");
+  }
+
+  if (type === "weather_show") {
+    openURL("https://www.weather.com/weather/today");
+  }
+
+  if (type === "youtube_search" || type === "youtube_play") {
+    const query = encodeURIComponent(userInput);
+    openURL(`https://www.youtube.com/results?search_query=${query}`);
+  }
+};
 
 
 
@@ -44,7 +122,7 @@ function Home() {
      if (transcript.toLowerCase().includes(userData.assistantName.toLowerCase())) {
   const data = await getGeminiResponse(transcript);
   console.log(data);
-  speak(data.response);
+  handleCommand(data);
 }
       
 
