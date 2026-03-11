@@ -24,6 +24,14 @@ function Home() {
     }
   }
 
+  const speak =(text) =>{
+    const utterance = new SpeechSynthesisUtterance(text);
+     window.speechSynthesis.speak(utterance);
+  }
+
+
+
+
   useEffect(()=>{
     const speechRecognition =  window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = new speechRecognition();
@@ -36,6 +44,7 @@ function Home() {
      if (transcript.toLowerCase().includes(userData.assistantName.toLowerCase())) {
   const data = await getGeminiResponse(transcript);
   console.log(data);
+  speak(data.response);
 }
       
 
