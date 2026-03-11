@@ -13,7 +13,7 @@ Your task is to understand the user's natural language input and respond with a 
           "get_time" | "get_date" | "get_day" | "get_month" |
           "calculator_open" | "instagram_open" | "facebook_open" | "weather_show",
 
-  "userinput": "<original user input>" 
+  "userInput": "<original user input>" 
   (only remove your name from userinput if it exists. 
   If the user asked to search something on Google or YouTube, 
   keep only the search text in userinput),
