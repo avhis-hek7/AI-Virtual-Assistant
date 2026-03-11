@@ -9,6 +9,8 @@ router.get('/currentuser', authMiddleware.authMiddleware, userController.getCurr
 
 router.post('/update',authMiddleware.authMiddleware, upload.single('assisatntImage'), userController.updateAssistant )
 
+router.post('/asktoassistant', authMiddleware.authMiddleware, userController.askToAssistant)
+
 
 
 module.exports = router;

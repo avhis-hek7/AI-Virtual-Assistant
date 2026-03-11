@@ -27,7 +27,7 @@ function SignUp() {
       //  let result = await axios.post(`http://localhost:8000/api/auth/register`,{
             name,email,password
         },{withCredentials:true})
-        setUserData(result.data)
+        setUserData(result.data.user)
         setLoading(false)
         navigate("/customize")
     } catch (error) {

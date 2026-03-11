@@ -26,7 +26,7 @@ function Login() {
         // let result = await axios.post("http://localhost:8000/api/auth/login",{
             email,password
         },{withCredentials:true})
-        setUserData(result.data)
+        setUserData(result.data.user)
         setLoading(false)
         navigate("/")
     } catch (error) {

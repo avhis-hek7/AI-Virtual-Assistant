@@ -23,6 +23,9 @@ function Home() {
     }
   }
 
+
+  
+
   return (
     <div className='w-full h-screen bg-linear-to-t from-[black] to-[#030353] flex justify-center items-center flex-col gap-4'>
 

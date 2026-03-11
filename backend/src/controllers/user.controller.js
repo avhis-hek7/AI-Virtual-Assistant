@@ -131,4 +131,4 @@ async function askToAssistant(req,res){
   }
 }
 
-module.exports = { getCurrentUserController, updateAssistant };
+module.exports = { getCurrentUserController, updateAssistant, askToAssistant };
