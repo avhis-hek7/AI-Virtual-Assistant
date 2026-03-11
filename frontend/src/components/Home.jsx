@@ -190,7 +190,7 @@ function Home() {
     };
   }, []);
 
-  return (
+  return (<>
     <div className="w-full h-screen bg-linear-to-t from-[black] to-[#030353] flex justify-center items-center flex-col gap-4">
 
       {/* Mobile Menu Icon */}
@@ -269,7 +269,20 @@ function Home() {
       <h1 className="text-white text-[15px] font-semibold text-wrap text-center">
         {userText ? userText : aiText ? aiText : null}
       </h1>
+
+      
     </div>
+
+    <footer className="w-full bg-black text-gray-300 py-5">
+  <div className="text-center text-sm">
+    <p>© {new Date().getFullYear()} All Rights Reserved.</p>
+    <p className="mt-1">
+      Developed with ❤️ by <span className="text-white font-medium">Abhishek Sharma.</span>
+    </p>
+  </div>
+</footer>
+    </>
+    
   );
 }
 
