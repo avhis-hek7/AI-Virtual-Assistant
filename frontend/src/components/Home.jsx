@@ -160,12 +160,12 @@ function Home() {
       const transcript = e.results[e.results.length - 1][0].transcript.trim();
       console.log("Heard:", transcript);
 
-      // if (transcript.toLowerCase().includes(userData.assistantName.toLowerCase())) {
-      //   setUserText(transcript);
-      //   recognition.stop();
+      if (transcript.toLowerCase().includes(userData.assistantName.toLowerCase())) {
+        setUserText(transcript);
+        recognition.stop();
 
-      setUserText(transcript); //name doesnot to provide
-      recognition.stop();
+      // setUserText(transcript); //name doesnot to provide
+      // recognition.stop();
 
         const data = await getGeminiResponse(transcript);
         handleCommand(data);
