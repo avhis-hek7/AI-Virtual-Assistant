@@ -4,10 +4,18 @@ import UserDataContext from '../context/UserDataContext'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect } from 'react';
+import { useState } from 'react';
+import { useRef } from 'react';
 
 function Home() {
   const {userData,serverUrl,setUserData,getGeminiResponse} = useContext(UserDataContext);
   const navigate = useNavigate();
+  const[listening, setListenning] = useState(false);
+  const isSpeakingRef = useRef(false);
+  const recognitionRef = useRef(null);
+  const synth = window.speechSynthesis;
+
+
 
   const handleLogout = async() =>{
     try {
@@ -24,9 +32,28 @@ function Home() {
     }
   }
 
+  const startRecognition = () =>{
+    try {
+      recognitionRef.current?.start();
+      setListenning(true);
+    } catch (error) {
+      if(!error.message.includes("start")){
+        console.error("Recognition error:",error);
+      }
+      
+    }
+  }
+
   const speak =(text) =>{
     const utterance = new SpeechSynthesisUtterance(text);
-     window.speechSynthesis.speak(utterance);
+    isSpeakingRef.current = true;
+    utterance.onend = () =>{
+      isSpeakingRef.current = false;
+      startRecognition();
+      
+
+    }
+     synth.speak(utterance);
   }
 
 // const handleCommand = (data) => {
@@ -64,6 +91,8 @@ function Home() {
 //     );
 //   }
 // };
+
+// Open Chrome → address bar → click the popup blocked icon
 
 const handleCommand = (data) => {
   const { type, userInput, response } = data;
@@ -115,11 +144,63 @@ const handleCommand = (data) => {
     const recognition = new speechRecognition();
     recognition.continuous = true, 
     recognition.lang = 'en-US'
+    recognitionRef.current = recognition;
+
+    const isRecognizingRef = {current:false}
+
+    const safeRecognition = () => {
+      if(!isSpeakingRef.current && !isRecognizingRef.current){
+        try {
+          recognition.start();
+          console.log("Recognition requested to start");
+        } catch (err) {
+          if(err.name !== "InvalidStateError")
+          {
+            console.error("Start error",err);
+          }
+          
+        }
+    }
+  }
+
+  recognition.onstart = () => {
+    
+    isRecognizingRef.current = true;
+    setListenning(true);
+  };
+
+  recognition.onend = () => {
+    
+    isRecognizingRef.current = false;
+    setListenning(false);
+
+
+    if(!isSpeakingRef.current){
+      setTimeout(()=>{
+        safeRecognition();
+      },1000); // delay avoid the rapid loop
+    }
+  };
+
+  recognition.onerror = (event) =>{
+    console.warn("Recongition error:", event.error);
+    isRecognizingRef.current = false;
+    setListenning(false);
+    if(event.error !== "aborted" && !isSpeakingRef.current){
+      setTimeout(()=>{
+        safeRecognition();
+      },1000);
+    }
+  }
 
     recognition.onresult = async(e) =>{
       const transcript = e.results[e.results.length-1][0].transcript.trim()
-      console.log("Heared:",transcript)
+      console.log("headred:",transcript);
      if (transcript.toLowerCase().includes(userData.assistantName.toLowerCase())) {
+
+      recognition.stop();
+      isRecognizingRef.current = false;
+      setListenning(false);
   const data = await getGeminiResponse(transcript);
   console.log(data);
   handleCommand(data);
@@ -128,7 +209,21 @@ const handleCommand = (data) => {
 
     }
 
-    recognition.start();
+    const fallback = setInterval(()=>{
+      if(!isSpeakingRef.current && !isRecognizingRef.current){
+        safeRecognition();
+      }
+    },10000)
+    safeRecognition();
+
+    return () =>{
+      recognition.stop()
+      setListenning(false)
+      isRecognizingRef.current = false;
+      clearInterval(fallback);
+    }
+
+    
 
     
   },[])
