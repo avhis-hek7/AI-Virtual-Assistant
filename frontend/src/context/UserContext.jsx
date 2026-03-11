@@ -3,7 +3,7 @@ import UserDataContext from "./UserDataContext";
 import axios from "axios";
 
 function UserContext({ children }) {
-  const serverUrl = "http://localhost:8000";
+  const serverUrl = "https://ai-virtual-assistant-backend-5v5q.onrender.com";
 
  
 
