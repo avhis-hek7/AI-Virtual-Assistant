@@ -8,7 +8,7 @@ const {geminiResponse} = require('../gemini');
 
 const app = express();
 app.use(cors({
-    origin:"http://localhost:5173",
+    origin:"https://ai-virtual-assistant-q7cg.onrender.com",
     credentials:true
 }));
 app.use(express.json());
