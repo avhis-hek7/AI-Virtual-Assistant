@@ -28,7 +28,7 @@ Instructions:
 - "response": a short voice-friendly reply, e.g., "Sure, playing it now", "Here's what I found", "Today is Tuesday", etc.
 
 Type meanings:
-- "general": if it's a factual or informational question.
+- "general": if it's a factual or informational question.If someone ask you a question which answer is known then, such question also comes in general in give a short answer.
 - "google_search": if user wants to search something on Google.
 - "youtube_search": if user wants to search something on YouTube.
 - "youtube_play": if user wants to directly play a video or song.

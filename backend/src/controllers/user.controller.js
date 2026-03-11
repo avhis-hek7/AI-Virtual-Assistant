@@ -58,6 +58,8 @@ async function askToAssistant(req,res){
 
     const {command} = req.body;
      const user = await userModel.findById(req.userId);
+     user.history.push(command);
+     user.save();
      const userName = user.name;
      const assistantName = user.assistantName;
 
@@ -123,6 +125,7 @@ async function askToAssistant(req,res){
 
 
 
+  
   } catch (error) {
     return res.status(500).json({
             response:"Ask to assistant error."
