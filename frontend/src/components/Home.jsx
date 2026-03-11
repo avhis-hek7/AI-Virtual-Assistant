@@ -171,7 +171,7 @@ function Home() {
         handleCommand(data);
         setAiText(data.response);
         setUserText("");
-       // }
+       }
     };
 
     // Initial greeting
